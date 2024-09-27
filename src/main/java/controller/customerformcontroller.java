@@ -7,15 +7,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.customer;
 
+import java.net.URL;
 import java.sql.*;
+import java.util.ResourceBundle;
 
-public class customerformcontroller {
+public class customerformcontroller implements Initializable {
+
+
 
     @FXML
     private TableColumn<?, ?> addresscomumn;
@@ -72,10 +77,23 @@ public class customerformcontroller {
     private JFXTextField txtcussalary;
 
     @FXML
-    private JFXComboBox<?> txtcustitle;
+    private JFXComboBox<String> txtcustitle;
 
     @FXML
     void btnaddonaction(ActionEvent event) {
+           txtcusid.getText();
+           //txtcustitle.getText();
+           txtcusname.getText();
+           txtcussalary.getText();
+          // txtcusdate.getText();
+           txtcusaddress.getText();
+          // txtcusdate.getDate();
+           txtcuscity.getText();
+           txtcusprovince.getText();
+           txtcuspostalcodes.getText();
+
+
+
 
     }
 
@@ -97,9 +115,13 @@ public class customerformcontroller {
 
     @FXML
     void reloardonaction(ActionEvent event) throws SQLException {
+        loardtable();
 
-       ObservableList<customer> customerobservablelist = FXCollections.observableArrayList();
-         idcolumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+    }
+
+    public void loardtable(){
+        ObservableList<customer> customerobservablelist = FXCollections.observableArrayList();
+        idcolumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         titlecolumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         namecolumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         salarycolumn.setCellValueFactory(new PropertyValueFactory<>("salary"));
@@ -116,7 +138,7 @@ public class customerformcontroller {
             String SQL = "SELECT * FROM Customer";
             ResultSet resultSet = connection.createStatement().executeQuery(SQL);
             while(resultSet.next()){
-               customer customer = new customer(
+                customer customer = new customer(
                         resultSet.getString("CustID"),
                         resultSet.getString("CustTitle"),
                         resultSet.getString("CustName"),
@@ -129,7 +151,7 @@ public class customerformcontroller {
                 );
                 customerobservablelist.add(customer);
             }
-                tblcustomersid.setItems(customerobservablelist);
+            tblcustomersid.setItems(customerobservablelist);
 
         }
         catch (SQLException e){
@@ -137,6 +159,16 @@ public class customerformcontroller {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<String> custitle = FXCollections.observableArrayList();
+        custitle.add("Mr");
+        custitle.add("Ms");
+        custitle.add("Miss");
+        custitle.add("Mrs");
+        txtcustitle.setItems(custitle);
+        loardtable();
+    }
 }
 
 
