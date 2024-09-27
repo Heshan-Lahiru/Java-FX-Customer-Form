@@ -16,6 +16,7 @@ import model.customer;
 
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class customerformcontroller implements Initializable {
@@ -44,7 +45,7 @@ public class customerformcontroller implements Initializable {
     private TableColumn<?, ?> provincecolumn;
 
     @FXML
-    private TableColumn<?, ?> salarycolumn;
+    private TableColumn salarycolumn;
 
     @FXML
     private TableView<customer> tblcustomersid;
@@ -81,19 +82,30 @@ public class customerformcontroller implements Initializable {
 
     @FXML
     void btnaddonaction(ActionEvent event) {
-           txtcusid.getText();
-           //txtcustitle.getText();
-           txtcusname.getText();
-           txtcussalary.getText();
-          // txtcusdate.getText();
-           txtcusaddress.getText();
-          // txtcusdate.getDate();
-           txtcuscity.getText();
-           txtcusprovince.getText();
-           txtcuspostalcodes.getText();
 
+         customer cus= new customer(txtcusid.getText(),txtcustitle.getValue(),txtcusname.getText(),txtcusdate.getValue(),Double.parseDouble(txtcussalary.getText()),txtcusaddress.getText(),txtcuscity.getText(),txtcusprovince.getText(),txtcuspostalcodes.getText());
+        try {
+            String SQL = "INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)";
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "root");
+            PreparedStatement pre = connection.prepareStatement(SQL);
 
+            pre.setObject(1,cus.getId());
+            pre.setObject(2,cus.getTitle());
+            pre.setObject(3,cus.getName());
+            pre.setObject(4,cus.getDate());
+            pre.setObject(5,cus.getSalary());
+            pre.setObject(6,cus.getAddress());
+            pre.setObject(7,cus.getCity());
+            pre.setObject(8,cus.getProvince());
+            pre.setObject(9,cus.getPostalcode());
 
+            boolean isadd = pre.executeUpdate()>0;
+            System.out.println(isadd);
+            loardtable();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -142,9 +154,9 @@ public class customerformcontroller implements Initializable {
                         resultSet.getString("CustID"),
                         resultSet.getString("CustTitle"),
                         resultSet.getString("CustName"),
+                        resultSet.getDate("dob").toLocalDate(),
                         resultSet.getDouble("salary"),
                         resultSet.getString("CustAddress"),
-                        resultSet.getDate("dob").toLocalDate(),
                         resultSet.getString("City"),
                         resultSet.getString("Province"),
                         resultSet.getString("PostalCode")
