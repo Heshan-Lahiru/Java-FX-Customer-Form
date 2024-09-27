@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -101,7 +102,14 @@ public class customerformcontroller implements Initializable {
 
             boolean isadd = pre.executeUpdate()>0;
             System.out.println(isadd);
-            loardtable();
+            if(isadd){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Added").show();
+                loardtable();
+            }
+            else{
+                new Alert(Alert.AlertType.INFORMATION,"Customer Not Added").show();
+            }
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -137,8 +145,8 @@ public class customerformcontroller implements Initializable {
         titlecolumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         namecolumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         salarycolumn.setCellValueFactory(new PropertyValueFactory<>("salary"));
-        addresscomumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         datecolumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        addresscomumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         citycolumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         provincecolumn.setCellValueFactory(new PropertyValueFactory<>("province"));
         postalcodecolumn.setCellValueFactory(new PropertyValueFactory<>("postalcode"));
@@ -180,6 +188,24 @@ public class customerformcontroller implements Initializable {
         custitle.add("Mrs");
         txtcustitle.setItems(custitle);
         loardtable();
+
+        tblcustomersid.getSelectionModel().selectedItemProperty().addListener((observableValue, customer, newvalue) -> {
+           if(newvalue != null){
+               setValuetotext(newvalue);
+           }
+        });
+    }
+
+    private void setValuetotext(customer newvalue) {
+        txtcusid.setText(newvalue.getId());
+        txtcustitle.setValue(newvalue.getTitle());
+        txtcusname.setText(newvalue.getName());
+        txtcusdate.setValue(newvalue.getDate());
+        txtcussalary.setText(String.valueOf(newvalue.getSalary()));
+       txtcusaddress.setText(newvalue.getAddress());
+        txtcuscity.setText(newvalue.getCity());
+        txtcusprovince.setText(newvalue.getProvince());
+        txtcuspostalcodes.setText(newvalue.getPostalcode());
     }
 }
 
