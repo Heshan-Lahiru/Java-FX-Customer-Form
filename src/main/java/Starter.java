@@ -1,3 +1,4 @@
+import controller.customerformcontroller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,5 +13,7 @@ public class Starter extends Application {
     public void start(Stage stage) throws Exception {
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("view/customerform.FXML"))));
         stage.show();
+
+
     }
 }

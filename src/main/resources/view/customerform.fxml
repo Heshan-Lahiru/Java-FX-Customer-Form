@@ -24,11 +24,11 @@
                </children>
             </AnchorPane>
             <JFXTextField fx:id="txtcusid" layoutX="57.0" layoutY="109.0" promptText="Customer ID" />
-            <JFXTextField fx:id="txtcusname" layoutX="272.0" layoutY="109.0" promptText="Customer Name" />
-            <JFXTextField fx:id="txtcusaddress" layoutX="486.0" layoutY="109.0" promptText="Address" />
+            <JFXTextField fx:id="txtcusname" layoutX="466.0" layoutY="109.0" promptText="Customer Name" />
+            <JFXTextField fx:id="txtcusaddress" layoutX="57.0" layoutY="174.0" promptText="Address" />
             <JFXTextField fx:id="txtcussalary" layoutX="688.0" layoutY="109.0" promptText="Salary" />
             <DatePicker fx:id="txtcusdate" layoutX="885.0" layoutY="109.0" prefHeight="25.0" prefWidth="146.0" />
-            <JFXComboBox fx:id="txtcustitle" layoutX="57.0" layoutY="174.0" prefHeight="25.0" prefWidth="135.0" promptText="Title" />
+            <JFXComboBox fx:id="txtcustitle" layoutX="272.0" layoutY="109.0" prefHeight="25.0" prefWidth="135.0" promptText="Title" />
             <JFXTextField fx:id="txtcuscity" layoutX="272.0" layoutY="174.0" promptText="City" />
             <JFXTextField fx:id="txtcusprovince" layoutX="480.0" layoutY="174.0" promptText="Province" />
             <JFXTextField fx:id="txtcuspostalcodes" layoutX="688.0" layoutY="168.0" promptText="Postal Code" />
@@ -36,11 +36,11 @@
               <columns>
                 <TableColumn fx:id="idcolumn" prefWidth="58.0" text="ID" />
                 <TableColumn fx:id="titlecolumn" prefWidth="77.0" text="Title" />
-                  <TableColumn fx:id="namecolumn" prefWidth="178.0" text="Name" />
-                  <TableColumn fx:id="salarycolumn" prefWidth="120.0" text="Salary" />
-                  <TableColumn fx:id="datecolumn" prefWidth="127.0" text="Date" />
-                  <TableColumn fx:id="addresscomumn" prefWidth="102.0" text="Address" />
-                  <TableColumn fx:id="citycolumn" prefWidth="138.0" text="City" />
+                  <TableColumn fx:id="namecolumn" prefWidth="135.0" text="Name" />
+                  <TableColumn fx:id="salarycolumn" prefWidth="124.0" text="Salary" />
+                  <TableColumn fx:id="datecolumn" prefWidth="130.0" text="Date" />
+                  <TableColumn fx:id="addresscomumn" prefWidth="161.0" text="Address" />
+                  <TableColumn fx:id="citycolumn" prefWidth="115.0" text="City" />
                   <TableColumn fx:id="provincecolumn" prefWidth="130.0" text="Province" />
                   <TableColumn fx:id="postalcodecolumn" prefWidth="89.0" text="Postal Code" />
               </columns>

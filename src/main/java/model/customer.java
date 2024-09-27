@@ -11,13 +11,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 public class customer {
+
+
     private String id;
     private String title;
     private String name;
+    private LocalDate date;
     private double salary;
+
     private String address;
 
-    private LocalDate date;
+
 
     private String city;
 
