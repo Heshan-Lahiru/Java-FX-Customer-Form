@@ -179,7 +179,7 @@ public class customerformcontroller implements Initializable {
             Connection connection = dbconnection.getInstance().getConnection();
             PreparedStatement pre = connection.prepareStatement(SQL);
             pre.setObject(1,cus.getTitle());
-            pre.setObject(2,cus.getName());
+             pre.setObject(2,cus.getName());
             pre.setObject(3,cus.getDate());
             pre.setObject(4,cus.getSalary());
             pre.setObject(5,cus.getAddress());
