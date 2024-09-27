@@ -11,6 +11,7 @@ Connection connection;
 
           connection=  DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade", "root", "root");
 
+
     }
 
     public static dbconnection getInstance() throws SQLException {
