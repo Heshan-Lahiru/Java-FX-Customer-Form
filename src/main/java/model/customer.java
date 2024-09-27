@@ -19,6 +19,7 @@ public class customer {
     private LocalDate date;
     private double salary;
 
+
     private String address;
 
 
