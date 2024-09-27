@@ -23,5 +23,6 @@ public class customer {
 
     private String province;
 
+
     private String postalcode;
 }
