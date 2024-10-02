@@ -1,9 +1,8 @@
 
-package controller;
+package controller.customer;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import database.dbconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,10 +14,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.customer;
+import util.crudutill;
 
 import java.net.URL;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class customerformcontroller implements Initializable {
@@ -86,22 +85,19 @@ public class customerformcontroller implements Initializable {
     void btnaddonaction(ActionEvent event) {
 
          customer cus= new customer(txtcusid.getText(),txtcustitle.getValue(),txtcusname.getText(),txtcusdate.getValue(),Double.parseDouble(txtcussalary.getText()),txtcusaddress.getText(),txtcuscity.getText(),txtcusprovince.getText(),txtcuspostalcodes.getText());
+        String SQL = "INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)";
         try {
-            String SQL = "INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)";
-            Connection connection = dbconnection.getInstance().getConnection();
-            PreparedStatement pre = connection.prepareStatement(SQL);
-
-            pre.setObject(1,cus.getId());
-            pre.setObject(2,cus.getTitle());
-            pre.setObject(3,cus.getName());
-            pre.setObject(4,cus.getDate());
-            pre.setObject(5,cus.getSalary());
-            pre.setObject(6,cus.getAddress());
-            pre.setObject(7,cus.getCity());
-            pre.setObject(8,cus.getProvince());
-            pre.setObject(9,cus.getPostalcode());
-
-            boolean isadd = pre.executeUpdate()>0;
+           boolean isadd = crudutill.execute(SQL,
+                    cus.getId(),
+                    cus.getTitle(),
+                    cus.getName(),
+                    cus.getDate(),
+                    cus.getSalary(),
+                    cus.getAddress(),
+                    cus.getCity(),
+                    cus.getProvince(),
+                    cus.getPostalcode()
+            );
             System.out.println(isadd);
             if(isadd){
                 new Alert(Alert.AlertType.INFORMATION,"Customer Added").show();
@@ -121,11 +117,10 @@ public class customerformcontroller implements Initializable {
     @FXML
     void btndeleteonaction(ActionEvent event) {
 
-        String SQL = "DELETE FROM customer WHERE CustID='"+txtcusid.getText()+"'";
+        String SQL = "DELETE FROM customer WHERE CustID= ?";
 
         try {
-            Connection connection = dbconnection.getInstance().getConnection();
-            boolean isdelete = connection.createStatement().executeUpdate(SQL)>0;
+            boolean isdelete = crudutill.execute(SQL,txtcusid.getText() );
        if(isdelete){
            new Alert(Alert.AlertType.INFORMATION,"Customer Deleted").show();
            loardtable();
@@ -146,10 +141,11 @@ public class customerformcontroller implements Initializable {
 
         String SQL = "SELECT * FROM customer WHERE CustID=?";
         try {
-            Connection connection = dbconnection.getInstance().getConnection();
-            PreparedStatement pre = connection.prepareStatement(SQL);
-            pre.setObject(1,txtcusid.getText());
-            ResultSet resultSet = pre.executeQuery();
+            ResultSet resultSet =
+            crudutill.execute(SQL,
+                    txtcusid.getText()
+            );
+
             resultSet.next();
             customer customer = new customer(
                     resultSet.getString(1),
@@ -176,18 +172,17 @@ public class customerformcontroller implements Initializable {
 
         String SQL = "UPDATE customer SET CustTitle=?, CustName=?,DOB=?,salary=?,CustAddress=?,City=?,Province=?,PostalCode=? WHERE CustID=?";
         try {
-            Connection connection = dbconnection.getInstance().getConnection();
-            PreparedStatement pre = connection.prepareStatement(SQL);
-            pre.setObject(1,cus.getTitle());
-             pre.setObject(2,cus.getName());
-            pre.setObject(3,cus.getDate());
-            pre.setObject(4,cus.getSalary());
-            pre.setObject(5,cus.getAddress());
-            pre.setObject(6,cus.getCity());
-            pre.setObject(7,cus.getProvince());
-            pre.setObject(8,cus.getPostalcode());
-            pre.setObject(9,cus.getId());
-            boolean isupdated = pre.executeUpdate() > 0;
+            boolean isupdated  = crudutill.execute(SQL,
+                    cus.getTitle(),
+                    cus.getName(),
+                    cus.getDate(),
+                    cus.getSalary(),
+                    cus.getAddress(),
+                    cus.getCity(),
+                    cus.getProvince(),
+                    cus.getPostalcode(),
+                    cus.getId()
+            );
             if(isupdated){
                 new Alert(Alert.AlertType.INFORMATION,"Customer updated").show();
                 loardtable();
@@ -220,12 +215,10 @@ public class customerformcontroller implements Initializable {
         provincecolumn.setCellValueFactory(new PropertyValueFactory<>("province"));
         postalcodecolumn.setCellValueFactory(new PropertyValueFactory<>("postalcode"));
 
-
+        String SQL = "SELECT * FROM Customer";
 
         try {
-            Connection connection = dbconnection.getInstance().getConnection();
-            String SQL = "SELECT * FROM Customer";
-            ResultSet resultSet = connection.createStatement().executeQuery(SQL);
+            ResultSet resultSet =  crudutill.execute(SQL);
             while(resultSet.next()){
                 customer customer = new customer(
                         resultSet.getString("CustID"),
